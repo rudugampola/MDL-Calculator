@@ -1,0 +1,33 @@
+{% extends "calculate/layout.html" %} 
+{% load static %}
+{% include 'calculate/messages.html' %}
+
+{% block body %} 
+  {% include 'calculate/messages.html' %}
+  <div class="d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+    <img src="{% static 'images/lacsd.png' %}" alt="LACSD" style="width: 923px; height: 254px; margin-bottom: 10px">
+    <form action="{% url 'calculate:import_excel' %}" method="post" enctype="multipart/form-data" class="col-sm-4">
+      {% csrf_token %} 
+      {% if message %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endif %}
+      <div class="mb-3">
+        <label for="excel_file">Select Excel File for MDL Data Import: </label>
+        <input class="form-control" type="file"
+          type="file"
+          name="excel_file"
+          id="excel_file"
+          style="margin-right: 5px; margin-bottom: 10px"
+        />
+        <input
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Import Excel File."
+          type="submit"
+          style="padding: 0.5em; width: 100px"
+          class="btn btn-success rounded-pill"
+        />
+      </div>
+    </form>
+  </div>
+{% endblock %}

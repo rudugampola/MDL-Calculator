@@ -1,0 +1,8 @@
+__pycache__/
+calculate/__pycache__/
+MDL/__pycache__/
+calculate/migrations/__pycache__/
+*.log
+*.pot
+*.pyc
+.vscode/
