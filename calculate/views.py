@@ -40,6 +40,9 @@ def calculate_mdl(excel_file):
         cur_rl = group['formatted_pql'].iloc[0]
         cur_mdl = group['formatted_idl'].iloc[0]
         units = group['result_units'].iloc[0]
+        criteria1 = False
+        criteria2 = False
+        adjust_mdl = False
 
         # Get the cas number for the analyte
         cas = group['cmp'].iloc[0]
@@ -65,8 +68,29 @@ def calculate_mdl(excel_file):
                 mdlb_a = round(max(blks['result']), 3)
             mdls_a = round(std_rep * t_val_reps, 3)
 
+            # Criteria 1: Is the Verified MDL within 0.5-2 times the Current MDL?
+            if cur_mdl * 0.5 <= mdls_a <= cur_mdl * 2:
+                criteria1 = True
+
+            # Criteria 2: Are fewer than 3% of MB results above the current MDL?
+            # Count number of MB results above the current MDL
+            mb_greater_than_mdl = 0
+            for index, row in blks.iterrows():
+                if row['result'] > cur_mdl:
+                    mb_greater_than_mdl += 1
+            count_mb = len(blks)
+
+            if mb_greater_than_mdl / count_mb < 0.03:
+                criteria2 = True
+
+            # The existing MDL may optionally be left unchanged if the answer to Criteria 1 and Criteria 2
+            # are both "YES". Otherwise, adjust the MDL to the new verified MDL. This is based on the
+            # guidelines of 40CFR 136 Appendix B, Section (4)(f).
+            if criteria1 and criteria2:
+                adjust_mdl = True
+
             results[name] = (mdlb_a, mdls_a, max(
-                mdls_a, mdlb_a), cur_mdl, cur_rl, count, cas, units)
+                mdls_a, mdlb_a), cur_mdl, cur_rl, count, cas, units, criteria1, criteria2, adjust_mdl)
             count += 1
 
     # Date range for the data from run_date column, date_from is the latest date and date_to is the earliest date

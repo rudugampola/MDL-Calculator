@@ -27,11 +27,14 @@
           <th>CAS</th>
           <th>Analyte Name</th>
           <th>Units</th>
-          <th>MDLb</th>
-          <th>MDLs</th>
-          <th>Verified MDL</th>
+          <th data-toggle="tooltip" data-placement="top" title="MDLb was determined by using the guidelines per 40CFR 136 Appendix B, Section (2)(d)(iii)(B).">MDLb</th>
+          <th data-toggle="tooltip" data-placement="top" title="Calculated MDLs">MDLs</th>
+          <th data-toggle="tooltip" data-placement="top" title="Verified MDL was determined based on MDLs and MDLb rules per 40CFR 136 Appendix B,Section (4)(f).">Verified MDL</th>
           <th>Current MDL</th>
           <th>Current RL</th>
+          <th data-toggle="tooltip" data-placement="top" title="Is the Verified MDL within 0.5-2 times the Current MDL?">Criteria 1</th>
+          <th data-toggle="tooltip" data-placement="top" title="Are fewer than 3% of MB results above the current MDL?">Criteria 2</th>
+          <th>Adjust the current MDL to the Verified MDL?</th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +49,24 @@
             <td>{{ mdl.2 }}</td>
             <td>{{ mdl.3 }}</td>
             <td>{{ mdl.4 }}</td>
+
+            {% if mdl.8 == True %}
+              <td class="table-success">Yes</td>
+            {% else %}
+              <td class="table-danger">No</td>
+            {% endif %}
+
+            {% if mdl.9 == True %}
+              <td class="table-success">Yes</td>
+            {% else %}
+              <td class="table-danger">No</td>
+            {% endif %}
+
+            {% if mdl.10 == True %}
+              <td class="table-success">Optional Adjustment</td>
+            {% else %}
+              <td class="table-danger">Adjust to Verified MDL!</td>
+            {% endif %}
           </tr>
         {% endfor %}
       </tbody>
