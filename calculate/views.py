@@ -39,6 +39,7 @@ def calculate_mdl(excel_file):
         # Get the formatted_pql value for the analyte
         cur_rl = group['formatted_pql'].iloc[0]
         cur_mdl = group['formatted_idl'].iloc[0]
+        units = group['result_units'].iloc[0]
 
         # Get the cas number for the analyte
         cas = group['cmp'].iloc[0]
@@ -65,7 +66,7 @@ def calculate_mdl(excel_file):
             mdls_a = round(std_rep * t_val_reps, 3)
 
             results[name] = (mdlb_a, mdls_a, max(
-                mdls_a, mdlb_a), cur_mdl, cur_rl, count, cas)
+                mdls_a, mdlb_a), cur_mdl, cur_rl, count, cas, units)
             count += 1
 
     # Date range for the data from run_date column, date_from is the latest date and date_to is the earliest date

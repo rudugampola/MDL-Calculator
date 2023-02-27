@@ -1,5 +1,13 @@
+/* Change background color for all pages*/
+body {
+    background-color: lightgray;
+}
+
+
 tr:hover {
     background-color: lightgreen;
+    /* Make text bold */
+    font-weight: bold;
 }
 
 .badge {
