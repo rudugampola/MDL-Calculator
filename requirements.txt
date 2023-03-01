@@ -4,3 +4,4 @@ numpy==1.24.2
 gunicorn==20.1.0
 scipy==1.9.2
 psycopg2==2.9.1
+django-heroku==0.3.1
