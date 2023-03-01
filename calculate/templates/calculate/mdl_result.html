@@ -9,8 +9,10 @@
       {% if mdl_results %}
         <p class="d-flex justify-content-between align-items-center">   
           <span>   
-          <span>Date Range:</span> <span class="badge rounded-pill bg-success">{{ date_from }}</span>to <span class="badge rounded-pill bg-success">{{ date_to }}</span>
+          <span>Date Range:</span> <span class="badge rounded-pill bg-success">{{ date_from }}</span>to <span class="badge rounded-pill bg-success">{{ date_to }}.</span>
+          <span>File: </span><span class="badge rounded-pill bg-info">{{ file_name }}.</span>
           </span>
+          
           <span>
             <a type="button" class="btn btn-danger position-relative" href="{% url 'calculate:import_excel' %}">
               Home
